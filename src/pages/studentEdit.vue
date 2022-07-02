@@ -460,7 +460,7 @@ export default {
       }
 
       //   router.replace(`/studentFoilList/${enteredStudentId.value}`);
-
+      store.dispatch("deleteLastStudent");
       router.replace("/studentList");
     };
 
@@ -497,6 +497,7 @@ export default {
 
     const clickCancelButton = () => {
       // console.log("clickCancelButton");
+      store.dispatch("deleteLastStudent");
       router.replace(`/studentList/${studentId.value}`);
     };
 

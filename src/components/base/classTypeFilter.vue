@@ -3,7 +3,7 @@
     <ion-select
       interface="popover"
       :value="classTypeFilter"
-      @IonChange="$emit('update:classTypeFilter', $event.target.value)"
+      @ionChange="$emit('update:classTypeFilter', $event.target.value)"
     >
       <ion-select-option v-if="allShow" value="All">All</ion-select-option>
       <ion-select-option value="0">Foil</ion-select-option>

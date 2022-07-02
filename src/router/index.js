@@ -40,8 +40,26 @@ const routes = [
     component: () => import('../pages/classDetails.vue')
   },
   {
+    path: '/classList/:id/edit',
+    component: () => import('../pages/classEdit.vue')
+  },
+  {
     path: '/classList/add',
     component: () => import('../pages/classAdd.vue')
+  },
+  {
+    path: '/classList/:id/addSession',
+    component: () => import('../pages/classSessionAdd.vue')
+  },
+  {
+    path: '/classList/:id/:sessionId',
+    component: () => import('../pages/sessionDetails.vue')
+  },
+  {
+    path: '/classList/:id/:sessionId/edit',
+    component: () => import('../pages/sessionEdit.vue')
+    // component: () => import('../pages/classList.vue')
+    
   },
 
 

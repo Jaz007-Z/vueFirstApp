@@ -15,7 +15,7 @@ import { createStore } from 'vuex';
 const state = () => ({
 
     // filters
-    studentIdList: [ 
+    studentIdList: [
         {
             id: "JimmyId",
             name: "Jimmy Zimsky"
@@ -26,15 +26,18 @@ const state = () => ({
         },
         {
             id: "VirginiaId",
-            name: "Virginia"
+            name: "Virginia Placeholder"
         }
-     ],
+    ],
     foilStudentList: ["JimmyId", "AbbyId", "VirginiaId"], //foil is weapon 0
     epeeStudentList: ["JimmyId", "AbbyId"], //epee is weapon 1
-    saberStudentList: [], //empty on purpose
+    saberStudentList: [], //empty on purpose //saver is weapon 2
     intermediateStudentList: [],
+
     classGroupIdList: [],
     privateClassesList: [],
+
+
 
 
 
@@ -146,7 +149,7 @@ const state = () => ({
                     attendsTournaments: true,
                     abilityScale: 4,
                     readyToProgress: false,
-                    
+
                 },
                 {
                     class: "Epee",
@@ -175,50 +178,51 @@ const state = () => ({
         },
     ],
     classes: [
-        {
-            id: "classGroupId",
-            type: "foil",
-            isPrivate: false,
-            name: "make a default from info, but allow choice",
-            level: "intermediate",
-            syllabus: "work on footwork",
-            regularTime: "Thursday at 8:00",
-            studentList: ["displayed in attendance", "make sure they have a record in studentList"],
-            individualClasses: [
-                {
-                    id: "might end up being date + time",
-                    date: "dateObject"
-                    // lessonPlans: "Lesson plan, do russian drill",
-                    // postLessonNotes: "class needs to do better on lunges",
-                },
-            ]
-        },
-        {
-            id: "classGroupId2",
-            type: "epee",
-            isPrivate: false,
-            name: "make a default from info, but allow choice",
-            level: "intermediate",
-            syllabus: "work on footwork",
-            regularTime: "Thursday at 8:00",
-            studentList: ["displayed in attendance", "make sure they have a record in studentList"],
-            individualClasses: [
-                {
-                    id: "might end up being date + time",
-                    // lessonPlans: "Lesson plan, do russian drill",
-                    // postLessonNotes: "class needs to do better on lunges",
-                },
-            ]
-        },
+    //     {
+    //         id: "classGroupId",
+    //         weapon: "foil",
+    //         isPrivate: false,
+    //         name: "make a default from info, but allow choice",
+    //         type: "intermediate",
+    //         syllabus: "work on footwork",
+    //         notes: "notes general",
+    //         regularTime: "Thursday at 8:00",
+    //         studentRoster: ["displayed in attendance", "make sure they have a record in studentList"],
+    //         individualClasses: [
+    //             {
+    //                 id: "might end up being date + time",
+    //                 date: "dateObject"
+    //                 // lessonPlans: "Lesson plan, do russian drill",
+    //                 // postLessonNotes: "class needs to do better on lunges",
+    //             },
+    //         ]
+    //     },
+    //     {
+    //         id: "classGroupId2",
+    //         type: "epee",
+    //         isPrivate: false,
+    //         name: "make a default from info, but allow choice",
+    //         level: "intermediate",
+    //         syllabus: "work on footwork",
+    //         regularTime: "Thursday at 8:00",
+    //         studentList: ["displayed in attendance", "make sure they have a record in studentList"],
+    //         individualClasses: [
+    //             {
+    //                 id: "might end up being date + time",
+    //                 // lessonPlans: "Lesson plan, do russian drill",
+    //                 // postLessonNotes: "class needs to do better on lunges",
+    //             },
+    //         ]
+    //     },
 
     ],
-    individualClasses: [
+    sessions: [
         {
             id: "id",
             classGroupId: "classGroupId",
             lessonPlans: "Lesson Plans, do Russian drill",
             postLessonNotes: "class needs to better on lunges",
-            attended: ["JimmyId","AbbyId", "VirginiaId"]
+            attended: ["JimmyId", "AbbyId", "VirginiaId"]
         }
     ],
 
@@ -242,24 +246,55 @@ const getters = {
             const student = state.students.find((student) => student.id === studentId);
             // if (student != null) {
             //     console.log("gotten from State: ", student);
-                return student;
-        //     }
-        //     else {
-        //         const studentJson = await storage.get(`${studentId}`);
-        //         const studentParsed = JSON.parse(studentJson);
-        //         actions.addStudent(studentParsed);
-        //         console.log("gotten from sql and added to state: ", student);
-        //         return student;
-        //     }
+            return student;
+            //     }
+            //     else {
+            //         const studentJson = await storage.get(`${studentId}`);
+            //         const studentParsed = JSON.parse(studentJson);
+            //         actions.addStudent(studentParsed);
+            //         console.log("gotten from sql and added to state: ", student);
+            //         return student;
+            //     }
+        }
+    },
+    class(state) {
+        return (classId) => {
+            const classG = state.classes.find((classG) => classG.id === classId);
+            // if (student != null) {
+            //     console.log("gotten from State: ", student);
+            return classG;
+            //     }
+            //     else {
+            //         const studentJson = await storage.get(`${studentId}`);
+            //         const studentParsed = JSON.parse(studentJson);
+            //         actions.addStudent(studentParsed);
+            //         console.log("gotten from sql and added to state: ", student);
+            //         return student;
+            //     }
+        }
+    },
+    session(state) {
+        return (sessionId) => {
+            const session = state.sessions.find((session) => session.id === sessionId);
+            return session;
         }
     },
 
     classes(state) {
-        return state.classes;
+        return state.classGroupIdList;
     },
     classG(state) {
         return (classGroupId) => {
+            console.log("classG classList: ", state.classes)
             return state.classes.find((classG) => classG.id === classGroupId);
+        }
+    },
+    classObjectsFiltered(state) {
+        return (idArray) => {
+            // fill in later once classes are actually in place
+            // code to red of errors
+            state.classes;
+            idArray;
         }
     },
     // studentListClassFilter(state) {
@@ -285,20 +320,31 @@ const getters = {
 const mutations = {
     addStudent(state, studentData) {
         const newStudent = studentData;
-        // {
-        //     id: studentData.id,
-        //     name: studentData.name,
-        //     class: studentData.class,
-        //     classTime: studentData.classTime,
-        //     notes: studentData.notes
-        // };
         state.students.unshift(newStudent);
     },
     deleteStudent(state, studentId) {
-         const studentIndex = state.studentIdList.findIndex((student) => student.id === studentId);
-         state.students.splice(studentIndex);
+        const studentIndex = state.studentIdList.findIndex((student) => student.id === studentId);
+        state.students.splice(studentIndex);
+    },
+    deleteLastStudent(state) {
+        state.students.pop();
     },
 
+    addClass(state, classData) {
+        const newClass = classData;
+        state.classes.unshift(newClass);
+    },
+    deleteLastClass(state) {
+        state.classes.pop();
+    },
+
+    addSession(state, sessionData) {
+        const newSession = sessionData;
+        state.sessions.unshift(newSession);
+    },
+    deleteLastSession(state) {
+        state.sessions.pop();
+    },
 
 
     // passStudentListClassFilter(state, studentListClassFilter) {
@@ -319,7 +365,7 @@ const mutations = {
         // needs verification that student id hasn't been taken.
         state.students.find((student) => student.id === studentData.oldId).id = studentData.id;
         console.log("new id: ", state.students.find((student) => student.id === studentData.id).id);
-    
+
     },
 
     createStudentArray(state, studentArray) {
@@ -327,7 +373,12 @@ const mutations = {
     },
     createFencesFoilArray(state, fencesFoilArray) {
         state.fencesFoilArray = fencesFoilArray;
-    }
+    },
+
+
+    createClassArray(state, classArray) {
+        state.classGroupIdList = classArray;
+    },
 
 }
 const actions = {
@@ -339,6 +390,23 @@ const actions = {
     deleteStudent(context, studentId) {
         context.commit('deleteStudent', studentId);
     },
+    deleteLastStudent(context) {
+        context.commit('deleteLastStudent')
+    },
+    addClass(context, classData) {
+        context.commit('addClass', classData);
+    },
+    deleteLastClass(context) {
+        context.commit('deleteLastClass')
+    }, 
+    addSession(context, sessionData) {
+        context.commit('addSession', sessionData);
+    },
+    deleteLastSession(context) {
+        context.commit('deleteLastSession')
+    },
+
+
     passClassTypeFilter(context, classTypeFilter) {
         context.commit('passClassTypeFilter', classTypeFilter);
     },
@@ -350,7 +418,11 @@ const actions = {
     },
     createFencesFoilArray(context, fencesFoillArray) {
         context.commit('createFencesFoilArray', fencesFoillArray);
-    }
+    },
+
+    createClassArray(context, classArray) {
+        context.commit('createClassArray', classArray);
+    },
 
 }
 

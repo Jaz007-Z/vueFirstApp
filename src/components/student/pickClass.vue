@@ -9,7 +9,7 @@
     <ion-select
       interface="action-sheet"
       :value="classIdOriginal"
-      @ionChange="$emit('update:selectedClass', $event.target.value); $emit('forceRender'); filterClasses();"
+      @ionChange="$emit('update:selectedClass', $event.target.value); $emit('forceRender');"
     >
       <ion-select-option
         v-for="classX in filteredClasses"
@@ -32,7 +32,7 @@ import { ref } from "vue";
 
 export default {
   // props: ['classes', 'chosenClass', "previouslySelectedClasses"],
-  props: ["classes", "previouslySelectedClasses", "selectedClass", "index"],
+  props: ["classes", "previouslySelectedClasses", "selectedClass"],
   emits: ["update:selectedClass", "forceRender"],
 
   components: {
@@ -76,14 +76,20 @@ export default {
     //for reasons unknown, it seems to stop working there are more than one classes already selected, though one works fine
     const filterClasses = () => {
       const previouslySelectedClassesFiltered =
-        props.previouslySelectedClasses.filter((classX) => classX != null || classX == null);
+        props.previouslySelectedClasses.filter((classX) => classX != null);// || classX == null);
       console.log("previouslySelectedClassesFiltered", previouslySelectedClassesFiltered)
       const filteredClassesTemp = props.classes.filter((classX) =>
 
         !previouslySelectedClassesFiltered.includes(classX.id) ||
-        // previouslySelectedClassesFiltered.includes(classIdOriginal.value) ||
-        classX.id == classIdOriginal.value ||
-        classX.id == "none"
+        previouslySelectedClassesFiltered.includes(classIdOriginal.value) ||
+        classX.id == classIdOriginal.value //||
+        // classX.id == "none"
+        // previouslySelectedClassesFiltered.some(
+        //   (classPrev) =>
+        //     classPrev.id != classX.id ||
+        //     classPrev == "none" //||
+        //     // classPrev == classIdOriginal.value
+        // )
       );
       console.log("pickClass - filteredClasses: ", filteredClassesTemp);
       filteredClasses.value = filteredClassesTemp;

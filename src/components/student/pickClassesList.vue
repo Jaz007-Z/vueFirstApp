@@ -8,7 +8,6 @@
       <!-- add in dependency on classes available later -->
       <pick-class
         :classes="weaponClassList"
-        :index=0
         v-model:previouslySelectedClasses="selectedClasses"
         v-model:selectedClass="selectedClasses[0]"
         @force-render="forceRender"
@@ -18,7 +17,6 @@
     <ion-item v-if="selectedClasses[0]">
       <pick-class
         :classes="weaponClassList"
-        :index=1
         v-model:previouslySelectedClasses="selectedClasses"
         v-model:selectedClass="selectedClasses[1]"
         :key="componentKey"
@@ -43,6 +41,58 @@
         @force-render="forceRender"
       ></pick-class>
     </ion-item>
+    <ion-item v-if="selectedClasses[3]">
+      <pick-class
+        :classes="weaponClassList"
+        v-model:previouslySelectedClasses="selectedClasses"
+        v-model:selectedClass="selectedClasses[4]"
+        :key="componentKey"
+        @force-render="forceRender"
+      ></pick-class>
+    </ion-item>
+
+    <ion-item v-if="selectedClasses[4]">
+      <pick-class
+        :classes="weaponClassList"
+        v-model:previouslySelectedClasses="selectedClasses"
+        v-model:selectedClass="selectedClasses[5]"
+        :key="componentKey"
+        @force-render="forceRender"
+      ></pick-class>
+    </ion-item><ion-item v-if="selectedClasses[5]">
+      <pick-class
+        :classes="weaponClassList"
+        v-model:previouslySelectedClasses="selectedClasses"
+        v-model:selectedClass="selectedClasses[6]"
+        :key="componentKey"
+        @force-render="forceRender"
+      ></pick-class>
+    </ion-item><ion-item v-if="selectedClasses[6]">
+      <pick-class
+        :classes="weaponClassList"
+        v-model:previouslySelectedClasses="selectedClasses"
+        v-model:selectedClass="selectedClasses[7]"
+        :key="componentKey"
+        @force-render="forceRender"
+      ></pick-class>
+    </ion-item><ion-item v-if="selectedClasses[7]">
+      <pick-class
+        :classes="weaponClassList"
+        v-model:previouslySelectedClasses="selectedClasses"
+        v-model:selectedClass="selectedClasses[8]"
+        :key="componentKey"
+        @force-render="forceRender"
+      ></pick-class>
+    </ion-item><ion-item v-if="selectedClasses[8]">
+      <pick-class
+        :classes="weaponClassList"
+        v-model:previouslySelectedClasses="selectedClasses"
+        v-model:selectedClass="selectedClasses[9]"
+        :key="componentKey"
+        @force-render="forceRender"
+      ></pick-class>
+    </ion-item>
+    
   </div>
 </template>
 
@@ -69,7 +119,7 @@ export default {
   },
 
   // composition api code
-  setup(props) {
+  setup(props, context) {
     // const previouslySelectedClasses = ref([
     //   { name: "Foil Int at 7:00 Monday", id: "foilMonInt7" },
     // ]);
@@ -80,10 +130,27 @@ export default {
     // const selectedClasses = ref([
     //   { name: "Foil Int at 7:00 Monday", id: "foilMonInt7" },
     // ]);
+
+    // const getClassIds = () => {
+    //   if (props.classes) {
+    //     const array = [];
+    //     props.classes.forEach(classX => {
+    //       array.push(classX.id)
+          
+    //     });
+    //   }
+    // }
+
+    // const selectedClassesZ = props.classes
+      
+    // get array from state once that's in place DO LATER
     const selectedClasses = ref([
       "foilMonBeg8"
+      // { name: "Foil Int at 7:00 Monday", id: "foilMonInt7" },
     ]);
 
+
+    // this will be obtained through a store.get later DO LATER
     const weaponClassList = ref([
       //  {name: "Epee Thursday at 7", id: "EpeeThurInt7"},
       { name: "Foil Int at 7:00 Monday", id: "foilMonInt7" },
@@ -110,16 +177,18 @@ export default {
     test = fillSelectedClasses();
     console.log("TEST: ", test);
 
-    // const placeholder = ref("value")
-    // const renderEnforcer = ref(true)
+  //  this is not tested and may not work right (if I'm lucky it does)
+    const emitClasses = () => {
+      // add in filter for the emit
+
+      context.emit("update:classes", selectedClasses);
+    }
+
     const componentKey = ref(0);
     const forceRender = () => {
       componentKey.value += 1;
-      console.log("forceRender()")
-      // renderEnforcer.value = !renderEnforcer.value
-      // renderEnforcer.value = false;
-      // renderEnforcer.value = true;
-      // selectedClasses.value.push(classEntry);
+      console.log("forceRender()");
+      emitClasses();
     }
 
 

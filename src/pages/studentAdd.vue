@@ -81,7 +81,18 @@
       >
       </student-info-edit>
 
-      <ion-button type="submit" expand="block">Save</ion-button>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+            <ion-button type="submit" expand="block">Save</ion-button>
+          </ion-col>
+          <ion-col col-6>
+            <ion-button @click="() => clickCancelButton()" expand="block"
+              >Cancel</ion-button
+            >
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </form>
   </base-layout>
 </template>
@@ -96,6 +107,9 @@ import {
   IonButton,
   IonSelect,
   IonSelectOption,
+  IonGrid,
+  IonRow,
+  IonCol,
 } from "@ionic/vue";
 
 //imports from vue for composition api
@@ -109,9 +123,7 @@ import studentInfoEdit from "../components/student/studentInfoEdit.vue";
 //imports for storage
 import { Drivers, Storage } from "@ionic/storage";
 import * as CordovaSQLiteDriver from "localforage-cordovasqlitedriver";
-import { watchEffect } from '@vue/runtime-core';
-
-
+import { watchEffect } from "@vue/runtime-core";
 
 export default {
   //   emits: ["save-student"],
@@ -125,13 +137,14 @@ export default {
     IonButton, //may want to make it a global component
     IonSelect,
     IonSelectOption,
+    IonGrid,
+    IonRow,
+    IonCol,
   },
-
 
   //   },
   name: "VModel",
   setup() {
-
     // creates constants to work with route, store, and storage and set them up properly
     const storage = new Storage({
       driverOrder: [
@@ -172,10 +185,10 @@ export default {
     const fencesEpeeConversion = () => {
       var fencesEpeeBoolean = null;
       if (fencesEpee.value == "false") {
-         fencesEpeeBoolean = false;
+        fencesEpeeBoolean = false;
       }
       if (fencesEpee.value == "true") {
-         fencesEpeeBoolean = true;
+        fencesEpeeBoolean = true;
       }
       return fencesEpeeBoolean;
     };
@@ -226,7 +239,9 @@ export default {
     const saveStudent = async (studentData) => {
       const keyArray = await storage.keys();
       if (keyArray.includes(studentData.id)) {
-        console.log("error, Id already used, all Ids (for students and classes) must be unique")
+        console.log(
+          "error, Id already used, all Ids (for students and classes) must be unique"
+        );
         return "error";
       }
 
@@ -236,10 +251,9 @@ export default {
 
       //studentList change
       const studentList = store.getters.students;
-      studentList.push({id: studentData.id, name: studentData.name});
-      const studentListJson = JSON.stringify(studentList)
-      await storage.set('studentList', studentListJson); 
-      
+      studentList.push({ id: studentData.id, name: studentData.name });
+      const studentListJson = JSON.stringify(studentList);
+      await storage.set("studentList", studentListJson);
 
       //
 
@@ -296,12 +310,18 @@ export default {
       saveStudent(studentData);
     };
 
+    const clickCancelButton = () => {
+      // console.log("clickCancelButton");
+      router.replace("/studentList");
+    };
+
     return {
       saveStudent,
       submitForm,
       fencesFoilConversion,
       fencesEpeeConversion,
       fencesSaberConversion,
+      clickCancelButton,
       fencesFoil,
       fencesEpee,
       fencesSaber,

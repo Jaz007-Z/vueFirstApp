@@ -9,7 +9,9 @@
       <ion-label position="floating">Classes</ion-label>
       </ion-item> -->
 
-      <pick-classes-list>
+      <pick-classes-list
+      :classes="classes"
+      >
       </pick-classes-list>
       <!-- <ion-item>
         add in dependency on classes available later 
